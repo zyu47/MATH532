@@ -1,0 +1,112 @@
+	from scipy.spatial import distance_matrix
+
+	def is_nn(i, j, dist_m, n):
+		if i == j:
+			return 0
+		res = 0
+		dist_tmp = np.sort(dist_m[i])
+		if dist_m[i][j] <= dist_tmp[n]:
+			res = 1
+			return res
+		dist_tmp = np.sort(dist_m[j])
+		if dist_m[i][j] <= dist_tmp[n]:
+			res = 1
+		return res
+
+	def w_construction(X, n):
+		X = np.array(X) # samples x features
+		N = X.shape[0]
+		W = np.zeros((N, N)) - 1
+		dist_m = distance_matrix(X, X)
+	#     print(dist_m)
+		
+		for i in range(N):
+			for j in range(N):
+				if W[j][i] != -1:
+					W[i][j] = W[j][i]
+				else:
+					W[i][j] = is_nn(i, j, dist_m, n)
+		
+		return W
+
+	W = w_construction(np.array(M).T, 3)
+	D = np.diag(np.sum(W, axis=0))
+	L = D -W
+	w, v = np.linalg.eig(np.linalg.inv(D)@L)
+
+	plt.figure(figsize=(16,8))
+	plt.plot(v[8], v[3], '.')
+	for i in range(16):
+		plt.text(v[8][i], v[3][i], animals[i])
+	plt.show()
+
+
+
+
+
+
+	0  1  1  1  1  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  0  1  1  1  1  0  0  0  0  0  0  0  0  0  0  
+
+	1  1  0  1  0  0  0  0  0  0  0  0  0  0  0  0  
+
+	1  1  1  0  1  1  0  0  0  0  0  0  0  0  0  0  
+
+	1  1  0  1  0  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  1  0  1  1  0  1  0  0  0  0  0  0  0  0  0  
+
+	1  0  0  0  1  1  0  0  0  0  0  0  0  0  0  0  
+
+	0  0  0  0  0  0  0  0  1  1  1  1  0  0  0  0  
+
+	0  0  0  0  0  0  0  1  0  1  1  1  0  0  0  0  
+
+	0  0  0  0  0  0  0  1  1  0  1  1  1  0  0  0  
+
+	0  0  0  0  0  0  0  1  1  1  0  1  1  0  0  1  
+
+	0  0  0  0  0  0  0  1  1  1  1  0  1  1  1  1  
+
+	0  0  0  0  0  0  0  0  0  1  1  1  0  1  1  0  
+
+	0  0  0  0  0  0  0  0  0  0  0  1  1  0  1  1  
+
+	0  0  0  0  0  0  0  0  0  0  0  1  1  1  0  1  
+
+	0  0  0  0  0  0  0  0  0  0  1  1  0  1  1  0
+
+
+
+	0  1  1  1  1  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  0  1  1  1  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  1  0  1  1  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  1  1  0  1  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  1  1  1  0  1  1  0  0  0  0  0  0  0  0  0  
+
+	1  1  1  1  1  0  1  0  0  0  0  0  0  0  0  0  
+
+	1  1  1  1  1  1  0  1  0  0  0  0  0  0  0  0  
+
+	0  0  0  0  0  0  1  0  1  1  1  1  1  0  0  1  
+
+	0  0  0  0  0  0  0  1  0  1  1  1  1  1  1  1  
+
+	0  0  0  0  0  0  0  1  1  0  1  1  1  1  1  0  
+
+	0  0  0  0  0  0  0  1  1  1  0  1  1  0  0  1  
+
+	0  0  0  0  0  0  0  1  1  1  1  0  1  1  1  1  
+
+	0  0  0  0  0  0  0  1  1  1  1  1  0  1  1  1  
+
+	0  0  0  0  0  0  0  0  1  1  0  1  1  0  1  1  
+
+	0  0  0  0  0  0  0  0  1  1  0  1  1  1  0  1  
+
+	0  0  0  0  0  0  0  1  1  0  1  1  1  1  1  0  
