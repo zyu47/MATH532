@@ -44,7 +44,7 @@
 
 \section{Theory}
 \subsection*{Problem 3}
-\paragraph{a)} Because $x$ is a single point, we have:
+\paragraph{a)} Because $x$ is a single vector, we have:
 \begin{align*}
 \| x - \sum_{j \in N} w_j x_j \|^2 &= (x - \sum_{j \in N} w_j x_j)^T(x - \sum_{j \in N} w_j x_j) \\
 &= (x^T - \sum_{j \in N} w_j x_j^T)(x - \sum_{j \in N} w_j x_j) \\
@@ -61,9 +61,9 @@ Because $\sum_{j} w_j = 1$, we have $\sum_{k} w_k = 1$ and $\sum_{jk} w_j w_k = 
 &= \sum_{jk} w_j w_k (x^T x - x^T x_k - x_j^T x + x_j^T x_k) \\
 &= \sum_{jk} w_j w_k (x-x_j)^T(x-x_k)
 \end{align*}
-Thus, \[ E(w) = minimize(\sum_{jk} w_j w_k C_{jk}) \] where $C_{jk} = (x-x_j)^T(x-x_k)$.
+Thus, \[ E(w) = \sum_{jk} w_j w_k C_{jk} \] where $C_{jk} = (x-x_j)^T(x-x_k)$.
 \paragraph{b)}
-
+Our goal is to minimize $\sum_{jk} w_j w_k C_{jk}$ subject to $\sum_{j} w_j = 1$.
 
 \newpage
 \section{Programming}
