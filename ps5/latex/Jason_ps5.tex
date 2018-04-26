@@ -43,6 +43,49 @@
 \newpage
 
 \section{Theory}
+
+\subsection*{Problem 1}
+Suppose we have a two connected components and the weight matrix $W$ has the following shape:
+\[
+\begin{bmatrix}
+A_{m\times m} & 0\\
+0 & B_{n\times n}
+\end{bmatrix}
+\]
+where $A$ and $B$ are two different components with different shapes. We know that a vector of 1 is an eigenvector of $(D-W)$, where the diagonal elements of $D$ is a sum of row vectors of $W$, and its associated eigenvalue is 0. It will be easy to see that following two vectors will also be eigenvectors of $(D-W)$ with zero eigenvalues. The two vectors are:
+\[
+  v_1=
+  \begin{bmatrix}
+    \vec{1}_{m\times 1} \\
+    \vec{0}_{n \times 1}
+  \end{bmatrix}\quad
+  v_2=
+  \begin{bmatrix}
+    \vec{0}_{m\times 1} \\
+    \vec{1}_{n \times 1}
+  \end{bmatrix}\quad
+\]
+We can see that:
+\begin{equation*}
+(Dv_1)_{i} = =
+  \begin{cases}
+    D_{ii} = \sum_j w_{ij}       & \quad i <= m\\
+    0  & \quad i > m
+  \end{cases}
+\end{equation*}
+and:
+\begin{equation*}
+(Wv_1)_{i} = =
+  \begin{cases}
+    \sum_j^m w_{ij} = \sum_j w_{ij}       & \quad i <= m\\
+    0  & \quad i > m
+  \end{cases}
+\end{equation*}
+Therefore $(D-W)v_1 = 0v_1$. This idea can be applied to multiple connected components as well. 
+
+\subsection*{Problem 2}
+Because $M=(W-W)^T(I-W)$, $M$ is a positive semi-definite matrix, and all the eigenvalues of $M$ are non-negative. 
+
 \subsection*{Problem 3}
 \paragraph{a)} Because $x$ is a single vector, we have:
 \begin{align*}
@@ -133,7 +176,25 @@ trace(YMY^T) &= \sum_i \sum_j M_{ij} y_i^T y_j \\
 &= \sum_i {\| y_i - \sum_j W_{ij} y_j \|}^2
 \end{align*}
 
-\paragraph{f)} We can use the Lagrangian multiplier method. So the optimization problem becomes
+\paragraph{f)} We can apply the method of Lagrange multipliers, and get:
+\begin{align*}
+L &= trace(YMY^T) - \sum_{ij} \lambda_{ij} (y_i^Ty_j - \delta_{ij}) \\
+&= \sum_i \sum_j M_{ij} y_i^T y_j - \sum_{ij} \lambda_{ij} (y_i^Ty_j - \delta_{ij})
+\end{align*}
+If we take the partial derivative of $L$ over $y_k$, we get:
+\begin{align*}
+\frac{\partial L}{\partial y_k} &=  \sum_{j \ne k} M_{kj} y_j + 2 M_{kk} y_k + \sum_{j \ne k} M_{jk} y_j - \sum_{j \ne k} \lambda_{jk} y_j - 2 \lambda_{kk} y_k - \sum_{j \ne k} \lambda_{kj} y_j \\
+&= 2\sum_j M_{jk} y_j - (\sum_j \lambda_{jk} + \sum_j \lambda_{jk})y_j
+\end{align*}
+Let $\frac{\partial L}{\partial y_k} = 0$, we have:
+\begin{align*}
+\sum_j M_{jk} y_j = \frac{1}{2}(\sum_j \lambda_{jk} + \sum_j \lambda_{jk})y_j
+\end{align*}
+Since $\frac{1}{2}(\sum_j \lambda_{jk} + \sum_j \lambda_{jk})$ is a scalar, we can let $\nu = \frac{1}{2}(\sum_j \lambda_{jk} + \sum_j \lambda_{jk})$, and we have:
+\begin{align*}
+My_i = \nu y_i
+\end{align*}
+This is the eigenvector problem.
 
 \newpage
 \section{Programming}
